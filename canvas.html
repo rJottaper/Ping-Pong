@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <canvas id="folha" width="600" height="500">
+
+    </canvas>
+
+    <script>
+        let folhaDesenho = document.getElementById('folha');
+        let areaDesenho = folhaDesenho.getContext('2d');
+
+        let larguraCampo = 600;
+        let alturaCampo = 500;
+        let larguraLinha = 5;
+        let alturaRaquete = 80;
+        let larguraBola = 10;
+
+        areaDesenho.fillStyle = '#286';
+        areaDesenho.fillRect(0, 0, larguraCampo, alturaCampo); // Campo
+
+        areaDesenho.fillStyle = '#FFF'
+        areaDesenho.fillRect(larguraCampo / 2 - larguraLinha / 2, 0, larguraLinha, alturaCampo); // Linha que fica no centro
+        
+        areaDesenho.fillRect(0, 100, larguraLinha, alturaRaquete); // Raquete 1
+        areaDesenho.fillRect(larguraCampo - larguraLinha, 300, larguraLinha, alturaRaquete); // Raquete 2
+        areaDesenho.fillRect(30, 30, larguraBola, larguraBola); // Bola "Quadrada"
+        
+
+    </script>
+
+</body>
+</html>

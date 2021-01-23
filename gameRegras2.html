@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jogo</title>
+</head>
+<body>
+
+    <canvas id="folha" width="600" height="500">
+
+    </canvas>
+
+    <script>
+
+        window.onload = function() { // Para ter um atraso na animação.
+            setInterval(executar, 1000 / 30);
+        }
+        
+        let posicaoBolaX = posicaoBolaY = 10;
+        
+        let velocidadeBolaX = velocidadeBolaY =3;
+
+        let posicaoJogador1 = posicaoJogador2 = 40; 
+        
+        let espressuraRaquete = 11;
+        let alturaRaquete =  100;
+
+        let efeitoRaquete = 0.3;
+        let pointJogador1 = pointJogador2 = 0;
+
+        function executar() {
+
+            let folhaDesenho = document.getElementById('folha');
+            let areaDesenho = folhaDesenho.getContext('2d');
+
+            let larguraCampo = 600;
+            let alturaCampo = 500;
+            let larguraLinha = 5;
+            
+            let diametroBola = 10;
+
+            areaDesenho.fillStyle = "#277" // Cor do Campo
+            areaDesenho.fillRect(0, 0, larguraCampo, alturaCampo);
+
+            areaDesenho.fillStyle = "#FFF" // Cor da linha e das raquetes.
+            areaDesenho.fillRect(larguraCampo / 2 - larguraLinha / 2, 0, larguraLinha, alturaCampo); // Linha metade do campo
+
+            let contador = 0;
+
+            areaDesenho.fillRect(0, posicaoJogador1, larguraLinha, alturaRaquete);
+            areaDesenho.fillRect(larguraCampo - espressuraRaquete, posicaoJogador2, espressuraRaquete, alturaRaquete);
+
+            areaDesenho.fillRect(posicaoBolaX - diametroBola / 2, posicaoBolaY - diametroBola / 2, diametroBola, diametroBola); // Bola "Quadrada"
+            
+            // Movimento da bola.
+            posicaoBolaX = posicaoBolaX + velocidadeBolaX;
+            posicaoBolaY = posicaoBolaY + velocidadeBolaY;
+
+            // Verificação lado superior.
+            if (posicaoBolaY < 0 && velocidadeBolaY < 0) {
+                velocidadeBolaY = -velocidadeBolaY;
+            }
+
+            // Verificação lado inferior.
+            if (posicaoBolaX > alturaCampo && velocidadeBolaY > 0) {
+                velocidadeBolaY = -velocidadeBolaY;
+            }
+
+            // Vericação se o Jogador 2 fez ponto.
+            if (posicaoBolaX < 0) {
+                
+                if (posicaoBolaY > posicaoJogador1 && posicaoBolaY < posicaoJogador1 + alturaRaquete) {
+
+                    velocidadeBolaX = -velocidadeBolaX; // Para rebater a bola.
+
+                    let difY = posicaoBolaY - (posicaoJogador1 + alturaRaquete / 2); // Caso a bola bate no meio da raquete, a diferença vai ser 0.
+                    velocidadeBolaY = difY * efeitoRaquete;
+
+                } else {
+                    pointJogador2 = pointJogador2 + 1;
+                }
+            }
+
+            // Vericação se o Jogador 1 fez ponto.
+            if (posicaoBolaX > larguraCampo) {
+
+                if (posicaoBolaY > posicaoJogador2 && posicaoBolaY < posicaoJogador2 + alturaRaquete) {
+
+                    velocidadeBolaX -velocidadeBolaX;
+
+                    let difX = posicaoBolaY - (posicaoJogador2 + alturaRaquete / 2);
+                    velocidadeBolaY = difX * efeitoRaquete
+
+                } else {
+                    pointJogador1++;
+                }
+
+            }
+            
+        }   
+        
+        
+
+    </script>
+    
+</body>
+</html>

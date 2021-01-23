@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jogo</title>
+</head>
+<body>
+
+    <canvas id="folha" width="600" height="500">
+
+    </canvas>
+
+    <script>
+
+        window.onload = function() { // Para ter um atraso na animação.
+            setInterval(executar, 1000 / 30);
+        }
+
+        let posicaoBolaX = 10;
+        let posicaoBolaY = 10;
+        let velocidadeBolaX = 3;
+        let velocidadeBolaY = 3;
+
+        function executar() {
+
+            let folhaDesenho = document.getElementById('folha');
+            let areaDesenho = folhaDesenho.getContext('2d');
+
+            let larguraCampo = 600;
+            let alturaCampo = 500;
+            let larguraLinha = 5;
+            
+            let diametroBola = 10;
+
+            areaDesenho.fillStyle = "#277" // Cor do Campo
+            areaDesenho.fillRect(0, 0, larguraCampo, alturaCampo);
+
+            areaDesenho.fillStyle = "#FFF" // Cor da linha e das raquetes.
+            areaDesenho.fillRect(larguraCampo / 2 - larguraLinha / 2, 0, larguraLinha, alturaCampo); // Linha metade do campo
+
+            let contador = 0;
+
+            areaDesenho.fillRect(posicaoBolaX - diametroBola / 2, posicaoBolaY - diametroBola / 2, diametroBola, diametroBola); // Bola "Quadrada"
+            
+            // Movimento da bola.
+            posicaoBolaX = posicaoBolaX + velocidadeBolaX;
+            posicaoBolaY = posicaoBolaY + velocidadeBolaY;
+
+            // Verificação lado superior.
+            if (posicaoBolaY < 0 && velocidadeBolaY < 0) {
+                velocidadeBolaY = -velocidadeBolaY;
+            }
+
+            // Verificação lado inferior.
+            if (posicaoBolaX > alturaCampo && velocidadeBolaY > 0) {
+                velocidadeBolaY = -velocidadeBolaY;
+            }
+            
+        }   
+        
+        
+
+    </script>
+    
+</body>
+</html>
